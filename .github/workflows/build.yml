@@ -5,22 +5,23 @@ on: [push, pull_request]
 jobs:
 
   build-android-armv7a:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: Build android-armv7a
       run: |
         scripts/build-android-armv7a.sh
 
-
   build-dedicated-windows-amd64:
-    runs-on: windows-2019
+    runs-on: windows-2022
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
     - name: Build dedicated windows-amd64
       run: |
-        git submodule init && git submodule update
         ./waf.bat configure -T debug -d
         ./waf.bat build
